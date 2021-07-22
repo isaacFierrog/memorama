@@ -5,91 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /*Reset*/
-        html{
-            box-sizing: border-box;
-            font-size: 10px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        *,*::after,*::before{
-            box-sizing: inherit;
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            font-size: 1.6rem;
-        }
 
-        /*Estilos generales*/
-        .container{
-            max-width: 100rem;
-            margin: 0 auto;
-        }
-
-        /*Utilidades*/
-        .flex-center{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /*Estilos header*/
-        .header{
-            height: 10vh;
-            width: 100%;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header__label{
-            margin-right: .5rem;
-        }
-
-        /*Estilos main*/
-        .main{
-            height: 80vh;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 2rem;
-            perspective: 700px;
-        }
-        .main__card{
-            font-size: 8rem;
-            background-color: #055052;
-            border-radius: 1rem;
-            transition-property: background-color, transform, opacity, visibility;
-            transition-duration: .2s, .5s, .2s, .2s;
-            transition-timing-function: ease-in-out;
-        }
-        .main__card:hover{
-            cursor: pointer;
-            background-color: #53B8BB;
-        }
-        .main__card--turn{
-            transform: rotateY(180deg);
-            background-color: #055052;
-        }
-        .main__card--hidde{
-            opacity: 0;
-            visibility: hidden;
-        }
-        .main__card--paint{
-            background-color: #50CB93;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1 class="header__title">Memorama</h1>
-            <label for="rango">
-                <span class="header__label">Numero de cartas</span>
-                <input class="header__range" type="range" id="rango" value="1" min="1">
-            </label>
+            <div>
+                <label for="rango">
+                    <span class="header__label">Numero de cartas</span>
+                    <input class="header__range" type="range" id="rango" value="1" min="1">
+                </label>
+                <p class="header__points"></p>
+            </div>
         </header>
         <hr>
         <main class="main">
@@ -99,46 +28,6 @@
             <div class="main__card flex-center">🥁</div>
         </main>
     </div>
-    <script>
-        const d = document
-            pilaCoincidencias = [];
-        let numCoincidencias = 0;
-
-        const evaluarCoincidencias = pila => {
-            if(pila[1].textContent === pila[0].textContent){
-                setTimeout(() => {
-                    numCoincidencias++;
-                    pila.forEach(el => el.classList.add("main__card--hidde"))
-                    pila.splice(0);
-                }, 300);
-            }else{
-                setTimeout(() => {
-                    pila.forEach(el => {
-                        el.classList.toggle("main__card--turn");
-                        el.classList.toggle("main__card--paint");
-                    });
-                    pila.splice(0);
-                }, 800);
-            }
-        };
-
-        const girarTarjeta = selecTarjeta => {
-            d.addEventListener("click", e => {
-                if(e.target.matches(selecTarjeta)){
-                    e.target.classList.toggle("main__card--turn");
-                    e.target.classList.toggle("main__card--paint");
-                    pilaCoincidencias.push(e.target);
-
-                    if(pilaCoincidencias.length === 2){
-                        evaluarCoincidencias(pilaCoincidencias);
-                    }
-                }
-            });
-        };
-
-        d.addEventListener("DOMContentLoaded", e => {
-            girarTarjeta(".main__card");
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
